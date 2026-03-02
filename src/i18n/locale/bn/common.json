@@ -1,0 +1,22 @@
+{
+  "navHome": "হোম",
+  "navJobs": "চাকরি খুঁজুন",
+  "navCompanies": "কোম্পানি ব্রাউজ করুন",
+  "navLogin": "লগইন",
+  "navSignUp": "সাইন আপ",
+  "jobsTitle": "চাকরির তালিকা",
+  "jobDetail": "চাকরির বিস্তারিত",
+  "applyNow": "এখনই আবেদন করুন",
+  "searchPlaceholder": "চাকরির শিরোনাম বা কীওয়ার্ড",
+  "locationPlaceholder": "অবস্থান",
+  "searchButton": "চাকরি খুঁজুন",
+  "filterCategory": "ক্যাটাগরি",
+  "filterLocation": "অবস্থান",
+  "applyName": "নাম",
+  "applyEmail": "ইমেইল",
+  "applyResume": "রিজিউম লিংক (URL)",
+  "applyCoverNote": "কভার নোট",
+  "submitApplication": "আবেদন জমা দিন",
+  "breadcrumbHome": "হোম",
+  "breadcrumbJobs": "চাকরি"
+}

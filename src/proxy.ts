@@ -1,34 +1,11 @@
-import { NextResponse } from "next/server";
-import type { NextRequest } from "next/server";
-import { DEFAULT_LOCALE, isLocaleSegment } from "@/i18n/routing";
+import createMiddleware from 'next-intl/middleware';
+import { routing } from './i18n/routing';
 
-function isPublicFile(pathname: string) {
-  return /\.[^/]+$/.test(pathname);
-}
+const middleware = createMiddleware(routing);
 
-export function proxy(req: NextRequest) {
-  const { pathname } = req.nextUrl;
+export const proxy = middleware;
+export default middleware;
 
-  if (
-    pathname.startsWith("/_next") ||
-    pathname.startsWith("/api") ||
-    pathname.startsWith("/favicon") ||
-    isPublicFile(pathname)
-  ) {
-    return NextResponse.next();
-  }
-
-  const segments = pathname.split("/").filter(Boolean);
-  const first = segments[0];
-
-  if (isLocaleSegment(first)) {
-    return NextResponse.next();
-  }
-
-  const url = req.nextUrl.clone();
-  url.pathname = `/${DEFAULT_LOCALE}${pathname === "/" ? "" : pathname}`;
-  return NextResponse.rewrite(url);
-}
-
-export default proxy;
-
+export const config = {
+  matcher: ['/((?!api|health|_next|.*\\..*).*)'],
+};

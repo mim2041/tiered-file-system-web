@@ -1,2 +1,22 @@
-{}
-
+{
+  "navHome": "Home",
+  "navJobs": "Find Jobs",
+  "navCompanies": "Browse Companies",
+  "navLogin": "Login",
+  "navSignUp": "Sign Up",
+  "jobsTitle": "Job Listings",
+  "jobDetail": "Job Detail",
+  "applyNow": "Apply Now",
+  "searchPlaceholder": "Job title or keyword",
+  "locationPlaceholder": "Location",
+  "searchButton": "Search my job",
+  "filterCategory": "Category",
+  "filterLocation": "Location",
+  "applyName": "Name",
+  "applyEmail": "Email",
+  "applyResume": "Resume link (URL)",
+  "applyCoverNote": "Cover note",
+  "submitApplication": "Submit Application",
+  "breadcrumbHome": "Home",
+  "breadcrumbJobs": "Jobs"
+}
