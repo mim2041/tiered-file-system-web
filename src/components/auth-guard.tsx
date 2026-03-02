@@ -1,7 +1,7 @@
 "use client";
 import { useRouter } from "next/navigation";
 import { ReactNode, useEffect } from "react";
-import { useAuth } from "@/context/auth-context";
+import { useAuth } from "@/contexts/auth-context";
 
 export function AuthGuard({ children }: { children: ReactNode }) {
   const { token, loading } = useAuth();
