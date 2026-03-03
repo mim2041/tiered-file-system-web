@@ -13,9 +13,28 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
+/* Mobile viewport adjustments */
+@media (max-width: 640px) {
+  body {
+    font-size: 15px;
+  }
+}
+
 ::-webkit-scrollbar { width: 6px; height: 6px; }
 ::-webkit-scrollbar-track { background: transparent; }
 ::-webkit-scrollbar-thumb { background: #334155; border-radius: 4px; }
+
+/* Prevent zoom on input focus on iOS */
+input, select, textarea {
+  font-size: 16px;
+}
+
+/* Touch-friendly button sizes for mobile */
+@media (max-width: 640px) {
+  button {
+    min-height: 44px;
+  }
+}
 
 @layer utilities {
   .glass {
@@ -37,21 +56,74 @@ body {
     -webkit-text-fill-color: transparent;
   }
   .input-field {
-    @apply w-full rounded-xl bg-white/5 border border-white/10 px-4 py-3 text-sm text-slate-200 placeholder-slate-500 outline-none transition-all duration-200 focus:border-indigo-500 focus:bg-white/10 focus:ring-2 focus:ring-indigo-500/20;
+    @apply w-full rounded-xl bg-white/5 border border-white/10 px-3 sm:px-4 py-2 sm:py-3 text-xs sm:text-sm text-slate-200 placeholder-slate-500 outline-none transition-all duration-200 focus:border-indigo-500 focus:bg-white/10 focus:ring-2 focus:ring-indigo-500/20;
   }
   .btn-primary {
-    @apply inline-flex items-center justify-center gap-2 rounded-xl gradient-brand px-6 py-3 text-sm font-semibold text-white shadow-lg shadow-indigo-500/25 transition-all duration-200 hover:opacity-90 hover:shadow-indigo-500/40 active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed;
+    @apply inline-flex items-center justify-center gap-2 rounded-xl gradient-brand px-4 sm:px-6 py-2.5 sm:py-3 text-xs sm:text-sm font-semibold text-white shadow-lg shadow-indigo-500/25 transition-all duration-200 hover:opacity-90 hover:shadow-indigo-500/40 active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed;
   }
   .btn-secondary {
-    @apply inline-flex items-center justify-center gap-2 rounded-xl bg-white/5 border border-white/10 px-5 py-2.5 text-sm font-medium text-slate-200 transition-all duration-200 hover:bg-white/10 hover:border-white/20 active:scale-95 disabled:opacity-50;
+    @apply inline-flex items-center justify-center gap-2 rounded-xl bg-white/5 border border-white/10 px-3 sm:px-5 py-2 sm:py-2.5 text-xs sm:text-sm font-medium text-slate-200 transition-all duration-200 hover:bg-white/10 hover:border-white/20 active:scale-95 disabled:opacity-50;
   }
   .btn-danger {
-    @apply inline-flex items-center justify-center gap-2 rounded-xl bg-red-500/10 border border-red-500/20 px-4 py-2 text-sm font-medium text-red-400 transition-all duration-200 hover:bg-red-500/20 hover:border-red-500/40 active:scale-95;
+    @apply inline-flex items-center justify-center gap-2 rounded-xl bg-red-500/10 border border-red-500/20 px-3 sm:px-4 py-1.5 sm:py-2 text-xs sm:text-sm font-medium text-red-400 transition-all duration-200 hover:bg-red-500/20 hover:border-red-500/40 active:scale-95;
   }
   .card {
-    @apply rounded-2xl glass p-6;
+    @apply rounded-2xl glass p-4 sm:p-6;
   }
   .badge {
     @apply inline-flex items-center gap-1 rounded-full px-2.5 py-0.5 text-xs font-medium;
+  }
+
+  /* Mobile-specific utilities */
+  @media (max-width: 640px) {
+    .safe-margin {
+      @apply px-4 py-6;
+    }
+    .safe-padded {
+      @apply p-4;
+    }
+  }
+
+  @media (min-width: 641px) {
+    .safe-margin {
+      @apply px-8 py-8;
+    }
+    .safe-padded {
+      @apply p-6;
+    }
+  }
+
+  /* Flexible typography for mobile */
+  .text-responsive-lg {
+    @apply text-lg sm:text-xl md:text-2xl;
+  }
+  .text-responsive-base {
+    @apply text-base sm:text-lg;
+  }
+  .text-responsive-sm {
+    @apply text-sm sm:text-base;
+  }
+
+  /* Mobile-friendly spacing utilities */
+  .gap-responsive {
+    @apply gap-2 sm:gap-3 md:gap-4;
+  }
+  .space-responsive-y {
+    @apply space-y-3 sm:space-y-4 md:space-y-6;
+  }
+
+  /* Grid responsive utilities */
+  .grid-responsive {
+    @apply grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3;
+  }
+}
+
+/* Improve table scrolling on mobile */
+@media (max-width: 640px) {
+  table {
+    font-size: 13px;
+  }
+  td, th {
+    padding: 8px 12px;
   }
 }

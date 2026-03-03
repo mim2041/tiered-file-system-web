@@ -10,9 +10,12 @@ import {
   LogIn,
   UserPlus,
   Vault,
+  Menu,
+  X,
 } from "lucide-react";
 import { useAuth } from "@/contexts/auth-context";
 import { cn } from "@/lib/utils";
+import { useState } from "react";
 
 const publicLinks = [
   { href: "/login", label: "Login", icon: LogIn },
@@ -30,12 +33,38 @@ export function Sidebar() {
   const pathname = usePathname();
   const router = useRouter();
   const { token, logout, me } = useAuth();
+  const [isOpen, setIsOpen] = useState(false);
 
   const isAuthPage = ["/login", "/register", "/verify-email", "/forgot-password", "/reset-password"].includes(pathname);
   if (isAuthPage) return null;
 
+  const handleNavClick = () => {
+    setIsOpen(false);
+  };
+
   return (
-    <aside className="sticky top-0 flex h-screen w-64 flex-col border-r border-white/5 bg-gradient-to-b from-slate-950 via-indigo-950/30 to-slate-950">
+    <>
+      {/* Mobile menu button */}
+      <button
+        onClick={() => setIsOpen(!isOpen)}
+        className="fixed top-4 left-4 z-40 flex items-center justify-center w-10 h-10 rounded-lg bg-indigo-600 text-white md:hidden"
+      >
+        {isOpen ? <X size={20} /> : <Menu size={20} />}
+      </button>
+
+      {/* Mobile overlay */}
+      {isOpen && (
+        <div
+          className="fixed inset-0 z-30 bg-black/50 md:hidden"
+          onClick={() => setIsOpen(false)}
+        />
+      )}
+
+      {/* Sidebar */}
+      <aside className={cn(
+        "fixed top-0 left-0 z-[35] flex h-screen w-64 flex-col border-r border-white/5 bg-gradient-to-b from-slate-950 via-indigo-950/30 to-slate-950 transition-transform duration-300 md:sticky md:translate-x-0",
+        isOpen ? "translate-x-0" : "-translate-x-full md:translate-x-0"
+      )}>
       {/* Logo */}
       <div className="flex items-center gap-3 px-6 py-6 border-b border-white/5">
         <div className="flex h-9 w-9 items-center justify-center rounded-xl gradient-brand">
@@ -68,6 +97,7 @@ export function Sidebar() {
           <Link
             key={href}
             href={href}
+            onClick={handleNavClick}
             className={cn(
               "flex items-center gap-3 rounded-xl px-4 py-2.5 text-sm font-medium transition-all duration-200",
               pathname === href
@@ -85,7 +115,7 @@ export function Sidebar() {
       {token ? (
         <button
           type="button"
-          onClick={() => { logout(); router.push("/login"); }}
+          onClick={() => { logout(); handleNavClick(); router.push("/login"); }}
           className="mx-4 mb-6 flex items-center gap-3 rounded-xl px-4 py-2.5 text-sm font-medium text-slate-500 transition hover:bg-red-500/10 hover:text-red-400"
         >
           <LogOut size={17} />
@@ -93,6 +123,7 @@ export function Sidebar() {
         </button>
       ) : null}
     </aside>
+    </>
   );
 }
 

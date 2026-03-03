@@ -169,44 +169,46 @@ export default function ExplorerPage() {
 
   return (
     <AuthGuard>
-      <div className="min-h-screen bg-gradient-to-br from-slate-950 via-indigo-950/10 to-slate-950 p-8">
-        <div className="mx-auto max-w-5xl space-y-6">
+      <div className="min-h-screen bg-gradient-to-br from-slate-950 via-indigo-950/10 to-slate-950 px-4 py-6 sm:p-8">
+        <div className="mx-auto max-w-5xl space-y-4 sm:space-y-6">
           {/* Header */}
-          <div className="flex flex-wrap items-center justify-between gap-4">
-            <div>
-              <h1 className="text-2xl font-bold text-white">File Explorer</h1>
-              <p className="mt-1 text-sm text-slate-400">Manage folders and files within your subscription limits</p>
+          <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+            <div className="min-w-0">
+              <h1 className="text-xl sm:text-2xl font-bold text-white">File Explorer</h1>
+              <p className="mt-1 text-xs sm:text-sm text-slate-400 truncate">Manage folders and files within your subscription limits</p>
             </div>
-            <div className="flex items-center gap-2">
-              <button onClick={loadData} className="btn-secondary">
+            <div className="flex flex-wrap items-center gap-2 sm:gap-3">
+              <button onClick={loadData} className="btn-secondary p-2 sm:px-3 sm:py-2" title="Refresh">
                 <RefreshCw size={15} className={loading ? "animate-spin" : ""} />
               </button>
-              <button onClick={() => fileInputRef.current?.click()} className="btn-secondary">
+              <button onClick={() => fileInputRef.current?.click()} className="btn-secondary text-xs sm:text-sm px-2 sm:px-3 py-2 flex-1 sm:flex-none">
                 <Upload size={15} />
-                Upload File
+                <span className="hidden sm:inline">Upload</span>
               </button>
               <input ref={fileInputRef} type="file" className="hidden" onChange={handleUpload} />
-              <button onClick={() => setShowNewFolder(true)} className="btn-primary">
+              <button onClick={() => setShowNewFolder(true)} className="btn-primary text-xs sm:text-sm px-2 sm:px-3 py-2 flex-1 sm:flex-none">
                 <Plus size={15} />
-                New Folder
+                <span className="hidden sm:inline">New Folder</span>
+                <span className="sm:hidden">New</span>
               </button>
             </div>
           </div>
 
           {/* Breadcrumb */}
-          <nav className="flex flex-wrap items-center gap-1 text-sm">
-            <button onClick={navigateRoot} className="flex items-center gap-1 text-indigo-400 hover:text-indigo-300 transition">
-              <Home size={14} /> Root
+          <nav className="flex flex-wrap items-center gap-1 text-xs sm:text-sm overflow-x-auto pb-2">
+            <button onClick={navigateRoot} className="flex items-center gap-1 text-indigo-400 hover:text-indigo-300 transition whitespace-nowrap">
+              <Home size={13} /> Root
             </button>
             {breadcrumbs.map((bc, i) => (
               <span key={bc.id} className="flex items-center gap-1">
-                <ChevronRight size={13} className="text-slate-600" />
+                <ChevronRight size={12} className="text-slate-600 flex-shrink-0" />
                 <button
                   onClick={() => navigateToIndex(i)}
                   className={cn(
-                    "transition",
+                    "transition truncate",
                     i === breadcrumbs.length - 1 ? "text-slate-200 font-medium" : "text-indigo-400 hover:text-indigo-300",
                   )}
+                  title={bc.name}
                 >
                   {bc.name}
                 </button>
@@ -216,22 +218,24 @@ export default function ExplorerPage() {
 
           {/* New folder form */}
           {showNewFolder && (
-            <form onSubmit={handleCreateFolder} className="flex items-center gap-2 rounded-xl border border-indigo-500/30 bg-indigo-500/10 px-4 py-3">
-              <Folder size={16} className="text-indigo-400 shrink-0" />
+            <form onSubmit={handleCreateFolder} className="flex flex-col sm:flex-row items-center gap-2 rounded-xl border border-indigo-500/30 bg-indigo-500/10 p-3 sm:px-4 sm:py-3">
+              <Folder size={16} className="text-indigo-400 shrink-0 hidden sm:block" />
               <input
                 autoFocus
-                className="input-field flex-1 py-1.5"
+                className="input-field flex-1 py-2 sm:py-1.5 text-sm w-full sm:w-auto"
                 placeholder="Folder name"
                 value={newFolderName}
                 onChange={e => setNewFolderName(e.target.value)}
                 required
               />
-              <button type="submit" className="btn-primary px-3 py-1.5 text-xs">
-                <Check size={14} /> Create
-              </button>
-              <button type="button" onClick={() => { setShowNewFolder(false); setNewFolderName(""); }} className="btn-secondary px-3 py-1.5 text-xs">
-                <X size={14} />
-              </button>
+              <div className="flex gap-2 w-full sm:w-auto">
+                <button type="submit" className="btn-primary px-3 py-2 text-xs flex-1 sm:flex-none">
+                  <Check size={14} /> <span className="hidden sm:inline">Create</span>
+                </button>
+                <button type="button" onClick={() => { setShowNewFolder(false); setNewFolderName(""); }} className="btn-secondary px-3 py-2 text-xs flex-1 sm:flex-none">
+                  <X size={14} />
+                </button>
+              </div>
             </form>
           )}
 
@@ -241,18 +245,18 @@ export default function ExplorerPage() {
               <div className="h-8 w-8 animate-spin rounded-full border-2 border-indigo-400 border-t-transparent" />
             </div>
           ) : (
-            <div className="space-y-4">
+            <div className="space-y-4 sm:space-y-6">
               {/* Folders section */}
               {folders.length > 0 && (
                 <section>
-                  <p className="mb-3 text-xs font-semibold uppercase tracking-widest text-slate-500">
+                  <p className="mb-2 sm:mb-3 text-xs font-semibold uppercase tracking-widest text-slate-500">
                     Folders ({folders.length})
                   </p>
-                  <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+                  <div className="grid gap-2 sm:gap-3 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
                     {folders.map((folder) => (
-                      <div key={folder.id} className="card glass-hover group flex items-center gap-3 p-4 cursor-pointer" onClick={() => navigateTo(folder)}>
-                        <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-indigo-500/15">
-                          <FolderOpen size={20} className="text-indigo-400" />
+                      <div key={folder.id} className="card glass-hover group flex items-center gap-2 sm:gap-3 p-2 sm:p-4 cursor-pointer" onClick={() => navigateTo(folder)}>
+                        <div className="flex h-9 w-9 sm:h-10 sm:w-10 shrink-0 items-center justify-center rounded-xl bg-indigo-500/15">
+                          <FolderOpen size={18} className="text-indigo-400" />
                         </div>
                         <div className="min-w-0 flex-1">
                           {renamingFolder?.id === folder.id ? (
@@ -263,26 +267,28 @@ export default function ExplorerPage() {
                             >
                               <input
                                 autoFocus
-                                className="input-field py-1 text-xs"
+                                className="input-field py-1 text-xs flex-1 min-w-0"
                                 value={renamingFolder.name}
                                 onChange={e => setRenamingFolder({ ...renamingFolder, name: e.target.value })}
                               />
-                              <button type="submit" className="text-emerald-400 hover:text-emerald-300"><Check size={14} /></button>
-                              <button type="button" onClick={() => setRenamingFolder(null)} className="text-slate-500 hover:text-slate-300"><X size={14} /></button>
+                              <button type="submit" className="text-emerald-400 hover:text-emerald-300 flex-shrink-0"><Check size={14} /></button>
+                              <button type="button" onClick={() => setRenamingFolder(null)} className="text-slate-500 hover:text-slate-300 flex-shrink-0"><X size={14} /></button>
                             </form>
                           ) : (
-                            <p className="truncate text-sm font-medium text-slate-200">{folder.name}</p>
+                            <>
+                              <p className="truncate text-xs sm:text-sm font-medium text-slate-200">{folder.name}</p>
+                              <p className="text-xs text-slate-600">Level {folder.nestingLevel ?? "—"}</p>
+                            </>
                           )}
-                          <p className="text-xs text-slate-600">Level {folder.nestingLevel ?? "—"}</p>
                         </div>
                         <div className="flex shrink-0 items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity" onClick={e => e.stopPropagation()}>
-                          <button onClick={() => setRenamingFolder({ id: folder.id, name: folder.name })} className="rounded p-1.5 text-slate-500 hover:bg-white/5 hover:text-slate-300 transition">
-                            <Pencil size={13} />
+                          <button onClick={() => setRenamingFolder({ id: folder.id, name: folder.name })} className="rounded p-1 text-slate-500 hover:bg-white/5 hover:text-slate-300 transition" title="Rename">
+                            <Pencil size={12} />
                           </button>
-                          <button onClick={() => handleDeleteFolder(folder.id, folder.name)} className="rounded p-1.5 text-slate-500 hover:bg-red-500/10 hover:text-red-400 transition">
-                            <Trash2 size={13} />
+                          <button onClick={() => handleDeleteFolder(folder.id, folder.name)} className="rounded p-1 text-slate-500 hover:bg-red-500/10 hover:text-red-400 transition" title="Delete">
+                            <Trash2 size={12} />
                           </button>
-                          <ChevronRight size={14} className="text-slate-600" />
+                          <ChevronRight size={13} className="text-slate-600" />
                         </div>
                       </div>
                     ))}
@@ -293,10 +299,11 @@ export default function ExplorerPage() {
               {/* Files section */}
               {files.length > 0 && (
                 <section>
-                  <p className="mb-3 text-xs font-semibold uppercase tracking-widest text-slate-500">
+                  <p className="mb-2 sm:mb-3 text-xs font-semibold uppercase tracking-widest text-slate-500">
                     Files ({files.length})
                   </p>
-                  <div className="rounded-2xl glass overflow-hidden">
+                  {/* Desktop table view */}
+                  <div className="hidden sm:block rounded-2xl glass overflow-hidden overflow-x-auto">
                     <table className="w-full text-sm">
                       <thead>
                         <tr className="border-b border-white/5 text-xs text-slate-500">
@@ -353,21 +360,61 @@ export default function ExplorerPage() {
                       </tbody>
                     </table>
                   </div>
+
+                  {/* Mobile card view */}
+                  <div className="sm:hidden space-y-2">
+                    {files.map((file) => (
+                      <div key={file.id} className="card glass-hover flex items-center gap-2 p-3">
+                        <FileIcon mime={file.mimeType} />
+                        <div className="min-w-0 flex-1">
+                          {renamingFile?.id === file.id ? (
+                            <form onSubmit={handleRenameFile} className="flex items-center gap-1">
+                              <input
+                                autoFocus
+                                className="input-field py-1 text-xs flex-1 min-w-0"
+                                value={renamingFile.name}
+                                onChange={e => setRenamingFile({ ...renamingFile, name: e.target.value })}
+                              />
+                              <button type="submit" className="text-emerald-400 hover:text-emerald-300 flex-shrink-0"><Check size={14} /></button>
+                              <button type="button" onClick={() => setRenamingFile(null)} className="text-slate-500 flex-shrink-0"><X size={14} /></button>
+                            </form>
+                          ) : (
+                            <>
+                              <p className="truncate font-medium text-slate-200 text-sm">{file.name || file.originalName}</p>
+                              <div className="flex gap-2 text-xs text-slate-500 mt-1">
+                                <span>{file.mimeType?.split("/")[1] ?? "—"}</span>
+                                <span>•</span>
+                                <span>{fmtSize(file.size)}</span>
+                              </div>
+                            </>
+                          )}
+                        </div>
+                        <div className="flex items-center gap-1 flex-shrink-0">
+                          <button onClick={() => setRenamingFile({ id: file.id, name: file.name || file.originalName || "" })} className="rounded p-1.5 text-slate-500 hover:bg-white/5 hover:text-slate-300 transition">
+                            <Pencil size={13} />
+                          </button>
+                          <button onClick={() => handleDeleteFile(file.id, file.name || file.originalName || file.id)} className="rounded p-1.5 text-slate-500 hover:bg-red-500/10 hover:text-red-400 transition">
+                            <Trash2 size={13} />
+                          </button>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
                 </section>
               )}
 
               {/* Empty state */}
               {!folders.length && !files.length && !loading && (
-                <div className="card flex flex-col items-center justify-center py-20 text-center">
-                  <FolderOpen size={48} className="mb-4 text-slate-700" />
-                  <p className="font-semibold text-slate-400">This folder is empty</p>
-                  <p className="mt-1 text-sm text-slate-600">Create a subfolder or upload files to get started</p>
-                  <div className="mt-6 flex gap-3">
-                    <button onClick={() => setShowNewFolder(true)} className="btn-primary text-sm">
-                      <Plus size={15} /> New Folder
+                <div className="card flex flex-col items-center justify-center py-16 sm:py-20 text-center px-4">
+                  <FolderOpen size={40} className="mb-4 text-slate-700" />
+                  <p className="font-semibold text-slate-400 text-sm sm:text-base">This folder is empty</p>
+                  <p className="mt-1 text-xs sm:text-sm text-slate-600">Create a subfolder or upload files to get started</p>
+                  <div className="mt-6 flex flex-col sm:flex-row gap-3 w-full sm:w-auto">
+                    <button onClick={() => setShowNewFolder(true)} className="btn-primary text-xs sm:text-sm">
+                      <Plus size={15} /> <span className="hidden sm:inline">New Folder</span>
                     </button>
-                    <button onClick={() => fileInputRef.current?.click()} className="btn-secondary text-sm">
-                      <Upload size={15} /> Upload
+                    <button onClick={() => fileInputRef.current?.click()} className="btn-secondary text-xs sm:text-sm">
+                      <Upload size={15} /> <span className="hidden sm:inline">Upload</span>
                     </button>
                   </div>
                 </div>
@@ -377,7 +424,7 @@ export default function ExplorerPage() {
               {breadcrumbs.length > 0 && (
                 <button
                   onClick={() => setBreadcrumbs(prev => prev.slice(0, -1))}
-                  className="btn-secondary text-sm"
+                  className="btn-secondary text-xs sm:text-sm w-full sm:w-auto"
                 >
                   <ArrowLeft size={15} /> Back
                 </button>
@@ -387,12 +434,12 @@ export default function ExplorerPage() {
 
           {/* Enforcement legend */}
           <details className="card cursor-pointer">
-            <summary className="flex items-center gap-2 text-sm font-semibold text-slate-300 list-none">
-              <AlertTriangle size={15} className="text-amber-400" />
+            <summary className="flex items-center gap-2 text-xs sm:text-sm font-semibold text-slate-300 list-none">
+              <AlertTriangle size={15} className="text-amber-400 flex-shrink-0" />
               Plan Enforcement Codes
               <span className="ml-auto text-xs text-slate-600">click to expand</span>
             </summary>
-            <div className="mt-4 grid gap-2 text-xs sm:grid-cols-2">
+            <div className="mt-4 grid gap-2 text-xs grid-cols-1 sm:grid-cols-2">
               {[
                 ["SUBSCRIPTION_REQUIRED", "Active subscription required"],
                 ["MAX_NESTING_LEVEL_EXCEEDED", "Folder nesting limit reached"],
@@ -403,9 +450,9 @@ export default function ExplorerPage() {
                 ["TOTAL_FILE_LIMIT_REACHED", "Account file limit reached"],
                 ["FOLDER_HAS_CHILDREN", "Cannot delete folder with subfolders"],
               ].map(([code, msg]) => (
-                <div key={code} className="flex items-start gap-2 rounded-lg bg-white/5 px-3 py-2">
-                  <code className="shrink-0 text-amber-400/80">{code}</code>
-                  <span className="text-slate-500">{msg}</span>
+                <div key={code} className="flex items-start gap-2 rounded-lg bg-white/5 px-2 sm:px-3 py-2">
+                  <code className="shrink-0 text-amber-400/80 text-xs">{code}</code>
+                  <span className="text-slate-500 text-xs">{msg}</span>
                 </div>
               ))}
             </div>

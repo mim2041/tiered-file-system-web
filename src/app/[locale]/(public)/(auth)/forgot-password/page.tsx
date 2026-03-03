@@ -21,15 +21,15 @@ export default function ForgotPasswordPage() {
   return (
     <AuthLayout title="Reset password" subtitle="We'll send a link to your inbox">
       {sent ? (
-        <div className="rounded-xl border border-emerald-500/20 bg-emerald-500/10 px-4 py-5 text-center">
-          <p className="text-sm font-semibold text-emerald-400">Check your email!</p>
-          <p className="mt-1 text-xs text-slate-500">A reset link has been sent to <strong className="text-slate-300">{email}</strong></p>
+        <div className="rounded-xl border border-emerald-500/20 bg-emerald-500/10 px-3 sm:px-4 py-4 sm:py-5 text-center">
+          <p className="text-xs sm:text-sm font-semibold text-emerald-400">Check your email!</p>
+          <p className="mt-1 text-xs text-slate-500">A reset link has been sent to <strong className="text-slate-300 break-all">{email}</strong></p>
         </div>
       ) : (
-        <form onSubmit={onSubmit} className="space-y-4">
+        <form onSubmit={onSubmit} className="space-y-3 sm:space-y-4">
           <div className="relative">
             <Mail size={16} className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-500" />
-            <input className="input-field pl-11" type="email" placeholder="Email address" value={email} onChange={e => setEmail(e.target.value)} required />
+            <input className="input-field pl-10 sm:pl-11" type="email" placeholder="Email address" value={email} onChange={e => setEmail(e.target.value)} required />
           </div>
           <button type="submit" disabled={loading} className="btn-primary w-full">
             {loading ? "Sending…" : "Send Reset Link"}

@@ -34,24 +34,24 @@ export default function LoginPage() {
 
   return (
     <AuthLayout title="Welcome back" subtitle="Sign in to your VaultTier account">
-      <form onSubmit={onSubmit} className="space-y-4">
+      <form onSubmit={onSubmit} className="space-y-3 sm:space-y-4">
         <div className="relative">
-          <Mail size={16} className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-500" />
-          <input className="input-field pl-11" type="email" placeholder="Email address" value={email} onChange={e => setEmail(e.target.value)} required />
+          <Mail size={16} className="absolute left-4 sm:left-4 top-1/2 -translate-y-1/2 text-slate-500" />
+          <input className="input-field pl-10 sm:pl-11" type="email" placeholder="Email address" value={email} onChange={e => setEmail(e.target.value)} required />
         </div>
         <div className="relative">
-          <Lock size={16} className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-500" />
-          <input className="input-field pl-11" type="password" placeholder="Password" value={password} onChange={e => setPassword(e.target.value)} required />
+          <Lock size={16} className="absolute left-4 sm:left-4 top-1/2 -translate-y-1/2 text-slate-500" />
+          <input className="input-field pl-10 sm:pl-11" type="password" placeholder="Password" value={password} onChange={e => setPassword(e.target.value)} required />
         </div>
         <div className="flex justify-end">
-          <Link href="/forgot-password" className="text-xs text-indigo-400 hover:text-indigo-300 transition">Forgot password?</Link>
+          <Link href="/forgot-password" className="text-xs sm:text-sm text-indigo-400 hover:text-indigo-300 transition">Forgot password?</Link>
         </div>
         <button type="submit" disabled={loading} className="btn-primary w-full">
           {loading ? <span className="h-4 w-4 animate-spin rounded-full border-2 border-white border-t-transparent" /> : <LogIn size={16} />}
           {loading ? "Signing in…" : "Sign In"}
         </button>
       </form>
-      <p className="mt-6 text-center text-sm text-slate-500">
+      <p className="mt-4 sm:mt-6 text-center text-xs sm:text-sm text-slate-500">
         No account?{" "}
         <Link href="/register" className="text-indigo-400 hover:text-indigo-300 font-medium transition">Create one</Link>
       </p>

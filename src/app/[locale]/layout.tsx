@@ -5,9 +5,9 @@ import { Sidebar } from "@/components/sidebar";
 export default function LocaleLayout({ children }: { children: React.ReactNode }) {
   return (
     <AuthProvider>
-      <div className="flex min-h-screen">
+      <div className="flex min-h-screen flex-col md:flex-row">
         <Sidebar />
-        <main className="flex-1 overflow-auto">{children}</main>
+        <main className="flex-1 overflow-auto pt-16 md:pt-0">{children}</main>
       </div>
       <Toaster
         richColors

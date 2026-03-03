@@ -25,14 +25,14 @@ export default function ResetPasswordPage() {
 
   return (
     <AuthLayout title="New password" subtitle="Enter your reset token and choose a new password">
-      <form onSubmit={onSubmit} className="space-y-4">
+      <form onSubmit={onSubmit} className="space-y-3 sm:space-y-4">
         <div className="relative">
           <KeyRound size={16} className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-500" />
-          <input className="input-field pl-11" placeholder="Reset token" value={token} onChange={e => setToken(e.target.value)} required />
+          <input className="input-field pl-10 sm:pl-11" placeholder="Reset token" value={token} onChange={e => setToken(e.target.value)} required />
         </div>
         <div className="relative">
           <Lock size={16} className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-500" />
-          <input className="input-field pl-11" type="password" placeholder="New password" value={newPassword} onChange={e => setNewPassword(e.target.value)} required />
+          <input className="input-field pl-10 sm:pl-11" type="password" placeholder="New password" value={newPassword} onChange={e => setNewPassword(e.target.value)} required />
         </div>
         <button type="submit" disabled={loading} className="btn-primary w-full">
           {loading ? "Updating…" : "Set New Password"}
